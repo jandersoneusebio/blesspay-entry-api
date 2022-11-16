@@ -1,5 +1,7 @@
 package blesspay.entry.service;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,6 +61,11 @@ public class EntryService {
 			throw new Exception("Entry doesn't exists");
 		}
 		
+	}
+	
+	public List<Entry> getAllEntries(String document) {
+		List<Entry> entries = entryRepository.findByAccountDocumentAndSituation(document, 1).orElse(Collections.emptyList());
+		return entries;
 	}
 	
 }

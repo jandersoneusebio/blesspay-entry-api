@@ -1,5 +1,7 @@
 package blesspay.entry.controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -46,6 +48,17 @@ public class EntryController {
 			return new ResponseEntity<String>("Entry deleted successfully", HttpStatus.OK);
 		} catch(Exception e) {
 			return new ResponseEntity<String>(e.getMessage(), HttpStatus.NOT_FOUND);
+		}
+		
+	}
+	
+	@GetMapping("get-all-entries")
+	public ResponseEntity<?> getAllEntries(@RequestParam("cpfCnpj") String cpfCnpj){
+		try {
+			List<Entry> entries = entryService.getAllEntries(cpfCnpj);
+			return new ResponseEntity<List<Entry>>(entries, HttpStatus.OK);
+		} catch(Exception e) {
+			return new ResponseEntity<String>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		
 	}
