@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import blesspay.entry.model.entity.Entry;
 import blesspay.entry.model.to.CreateEntryTO;
+import blesspay.entry.model.to.OrchestratorResponseTO;
 import blesspay.entry.service.EntryService;
 
 @RestController
@@ -23,10 +24,10 @@ public class EntryController {
 	private EntryService entryService;
 	
 	@PostMapping("create-entry")
-	public ResponseEntity<String> createEntry(@RequestBody CreateEntryTO createEntryTO){
+	public ResponseEntity<?> createEntry(@RequestBody CreateEntryTO createEntryTO){
 		try {
-			entryService.createEntry(createEntryTO);
-			return new ResponseEntity<String>("Entry created successfully", HttpStatus.OK);
+			OrchestratorResponseTO response = entryService.createEntry(createEntryTO);
+			return new ResponseEntity<OrchestratorResponseTO>(response, HttpStatus.OK);
 		} catch(Exception e) {
 			return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
 		}
