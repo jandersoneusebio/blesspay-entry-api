@@ -29,6 +29,10 @@ public class EntryController {
 	public ResponseEntity<?> createEntry(@RequestBody CreateEntryTO createEntryTO){
 		try {
 			OrchestratorResponseTO response = entryService.createEntry(createEntryTO);
+			
+			if(response.containsError()) {
+				return new ResponseEntity<OrchestratorResponseTO>(response, HttpStatus.valueOf(response.getStatusCode()));
+			}
 			return new ResponseEntity<OrchestratorResponseTO>(response, HttpStatus.OK);
 		} catch(Exception e) {
 			return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
